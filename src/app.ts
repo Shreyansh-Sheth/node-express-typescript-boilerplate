@@ -1,21 +1,17 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
 import actuator from "express-actuator";
-import { logger } from "./utils";
-import morgan from "morgan";
+import { sendVerificationMail } from "./email";
 import { morganMiddleware } from "./middleware";
+import AppRouter from "./routes";
 
-const prisma = new PrismaClient();
-//
 const app = express();
 
+// Logging All The Data
 app.use(morganMiddleware);
 
+//  For Checking Health Of Application
 app.use(actuator());
 
-app.get("/", (req, res) => {
-  logger.error("Hello WOrld");
-  res.send("Hello");
-});
+app.use("/", AppRouter);
 
 export default app;
