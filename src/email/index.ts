@@ -10,3 +10,6 @@ export function sendVerificationMail(link: string, to: string) {
   const template = ejs.compile(verificationMailTemplate, {});
   logger.log("info", template({ link }));
 }
+export function sendOtp(otp: string, to: string) {
+  logger.log("info", `OTP: ${otp} to ${to}`);
+}

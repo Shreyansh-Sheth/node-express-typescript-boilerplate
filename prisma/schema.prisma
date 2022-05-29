@@ -11,36 +11,32 @@ datasource db {
 }
 
 model User {
-  id         String       @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
-  email      String       @unique
+  email      String    @unique
+  password   String
   Session    Session[]
-  user_roles user_roles[]
   lastOnline DateTime
-  isVerified Boolean      @default(false)
+  isVerified Boolean   @default(false)
   otp        String?
+  role       String    @default("USER")
 }
 
+// enum roles {
+//   USER
+//   ADMIN
+//   MOD
+// }
+
 model Session {
-  id                 Int      @id @default(autoincrement())
+  id                 String   @id @default(uuid())
   userId             String
   user               User     @relation(fields: [userId], references: [id])
   createdAt          DateTime @default(now())
-  device             String
+  device             String?
+  os                 String?
+  browser            String?
   ip                 String
   lastRefreshedToken DateTime
-}
-
-model role {
-  id         String       @id @default(uuid())
-  name       String
-  user_roles user_roles[]
-}
-
-model user_roles {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  role   role   @relation(fields: [roleId], references: [id])
-  userId String
-  roleId String
+  blocked            Boolean  @default(false)
 }
