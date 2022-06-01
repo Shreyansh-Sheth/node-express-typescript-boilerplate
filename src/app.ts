@@ -24,5 +24,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/", AppRouter);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 export default app;
